@@ -62,6 +62,7 @@ const LinksList: React.FC<LinksListProps> = ({ links }) => {
     >
       <SortableContext items={links} strategy={verticalListSortingStrategy}>
         <Droppable
+          id='1'
           className={`min-h-[397px] md:max-h-[660px] lg:h-[490px] w-full md:overflow-auto ${
             links.length > 1 ? "pb-28" : ""
           }`}

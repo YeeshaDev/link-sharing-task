@@ -67,7 +67,7 @@ function PhoneMockup() {
               pathname === "/profile-details" ? "h-[320px]" : ""
             }`}
           >
-            {devlinksList?.map((link) => (
+            {devlinksList?.map((link:any) => (
               <DevLink key={link.id} link={link} mockup />
             ))}
           </ul>

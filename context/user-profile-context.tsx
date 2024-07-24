@@ -9,7 +9,7 @@ interface UserProfile {
   first_name: string;
   last_name: string;
   email: string;
-  profile_picture: string;
+  profile_picture: string | null;
 }
 
 interface ErrorField {
@@ -17,6 +17,13 @@ interface ErrorField {
     status: boolean;
     message: string;
   };
+}
+
+interface UserProfileData {
+  first_name: string;
+  last_name: string;
+  email: string;
+  profile_picture?: string; 
 }
 
 interface UserProfileContextProps {
@@ -31,7 +38,7 @@ interface UserProfileContextProps {
   buttonDisabled: boolean;
   userProfilePicURL: string | null;
   handleUserProfilePic: (imageFile: File) => void;
-  handleUserInputs: (name: string, value: string) => void;
+  handleUserInputs: (name: keyof UserProfile, value: string) => void;
   handleSubmit: (event: FormEvent) => Promise<void>;
 }
 
@@ -54,7 +61,7 @@ const UserProfileProvider: React.FC<UserProfileProviderProps> = ({ children }) =
     first_name: "",
     last_name: "",
     email: "",
-    profile_picture: "",
+    profile_picture: null,
   });
   const [userProfilePicFile, setUserProfilePicFile] = useState<File | null>(null);
   const [userProfilePicURL, setUserProfilePicURL] = useState<string | null>(null);
@@ -75,14 +82,14 @@ const UserProfileProvider: React.FC<UserProfileProviderProps> = ({ children }) =
     setUserProfilePicFile(imageFile);
   };
 
-  const postUserProfilePicFileIntoStorage = async (picFile: File) => {
+  const postUserProfilePicFileIntoStorage = async (picFile: File): Promise<string | null> => {
     const currentUser = auth?.currentUser;
     if (!currentUser) {
       throw new Error("User not found");
     }
 
     setImageProcessLoading(true);
-    const storageRef = ref(storage, `users/${currentUser.displayName}/profile_picture`);
+    const storageRef = ref(storage, `users/${currentUser.uid}/profile_picture`);
 
     try {
       const uploadTask = uploadBytesResumable(storageRef, picFile);
@@ -91,6 +98,7 @@ const UserProfileProvider: React.FC<UserProfileProviderProps> = ({ children }) =
       return downloadURL;
     } catch (error) {
       console.error("Image cannot be uploaded!", error);
+      return null;
     } finally {
       setImageProcessLoading(false);
     }
@@ -104,7 +112,7 @@ const UserProfileProvider: React.FC<UserProfileProviderProps> = ({ children }) =
     setErrorObject(error);
   };
 
-  const handleUserInputs = (name: string, value: string) => {
+  const handleUserInputs = (name: keyof UserProfile, value: string) => {
     setUserObject((prev) => ({
       ...prev,
       [name]: value,
@@ -116,17 +124,18 @@ const UserProfileProvider: React.FC<UserProfileProviderProps> = ({ children }) =
 
     if (hasError) return;
 
+    const updatedErrorObject: ErrorField = {};
+
     if (userObject.first_name.trim() === "") {
-      setErrorObject((prev) => ({
-        ...prev,
-        first_name: { status: true, message: "Can't be empty" },
-      }));
-      return;
-    } else if (userObject.last_name.trim() === "") {
-      setErrorObject((prev) => ({
-        ...prev,
-        last_name: { status: true, message: "Can't be empty" },
-      }));
+      updatedErrorObject.first_name = { status: true, message: "Can't be empty" };
+    }
+
+    if (userObject.last_name.trim() === "") {
+      updatedErrorObject.last_name = { status: true, message: "Can't be empty" };
+    }
+
+    if (Object.keys(updatedErrorObject).length > 0) {
+      setErrorObject(updatedErrorObject);
       return;
     }
 
@@ -154,14 +163,19 @@ const UserProfileProvider: React.FC<UserProfileProviderProps> = ({ children }) =
   useEffect(() => {
     setLoading(true);
     getUserProfileData()
-      .then((userData) => {
-        setUserObject(userData);
-        setUserProfilePicURL(userData.profile_picture);
+      .then((userData: UserProfileData | any) => {
+        // Convert UserProfileData to UserProfile
+        const convertedData: UserProfile = {
+          ...userData,
+          profile_picture: userData.profile_picture || null,
+        };
+        setUserObject(convertedData);
+        setUserProfilePicURL(userData.profile_picture || null);
         setLoading(false);
       })
       .catch((error) => {
         setLoading(false);
-        throw new Error(error.message);
+        console.error(error.message);
       });
   }, []);
 
@@ -173,7 +187,7 @@ const UserProfileProvider: React.FC<UserProfileProviderProps> = ({ children }) =
     }
   }, [hasAnyChanges, hasError, errorObject, loading, imageProcessLoading]);
 
-  const values = {
+  const values: UserProfileContextProps = {
     userProfilePicMockup,
     userObject,
     errorObject,

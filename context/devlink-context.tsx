@@ -2,13 +2,12 @@
 
 import { getUserDevlinks, submitUserDevLinks } from "@/lib/actions/dashboard";
 import { generateId } from "@/lib/utils/helpers";
-
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 
 interface DevLink {
   id: string;
   platform: string;
-  link: string;
+  link?: string;
 }
 
 interface ErrorField {
@@ -21,7 +20,7 @@ interface ErrorField {
 }
 
 interface DevlinksContextType {
-  devlinksList: DevLink[];
+  devlinksList: any;
   loading: boolean;
   isListEdited: boolean;
   isButtonDisabled: boolean;
@@ -33,7 +32,7 @@ interface DevlinksContextType {
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   addItemIntoList: (fieldId: string, platform: string, link: string) => void;
   changeIsEditedValue: (value: boolean) => void;
-  reorderList: (newOrderedList: DevLink[]) => void;
+  reorderList: (newOrderedList: any) => void;
 }
 
 // Define the type for the context
@@ -54,24 +53,23 @@ interface DevlinksProviderProps {
 }
 
 export const DevlinksProvider: React.FC<DevlinksProviderProps> = ({ children }) => {
-  const [devlinksList, setDevlinksList] = useState<DevLink[]>([]);
+  const [devlinksList, setDevlinksList] = useState<DevLink[] | any>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [errorField, setErrorField] = useState<ErrorField[]>([]);
   const [isListEdited, setIsListEdited] = useState<boolean>(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
 
   const throwError = (id: string, status: boolean, errorObj: ErrorField['field']) => {
-    const existingError = errorField.find((item) => item.id === id);
-
-    if (existingError) {
-      setErrorField((prev) =>
-        prev.map((item) =>
+    setErrorField((prev) => {
+      const existingError = prev.find((item) => item.id === id);
+      if (existingError) {
+        return prev.map((item) =>
           item.id === id ? { ...item, status, field: errorObj } : item
-        )
-      );
-    } else {
-      setErrorField((prev) => [...prev, { id, status, field: errorObj }]);
-    }
+        );
+      } else {
+        return [...prev, { id, status, field: errorObj }];
+      }
+    });
   };
 
   const removeError = (id: string) => {
@@ -85,9 +83,10 @@ export const DevlinksProvider: React.FC<DevlinksProviderProps> = ({ children }) 
   const addNewLink = () => {
     setIsListEdited(true);
     const id = generateId();
-    setDevlinksList((prev) =>
-      prev ? [...prev, { id, platform: "", link: "" }] : [{ id, platform: "", link: "" }]
-    );
+    setDevlinksList((prev: any) => [
+      ...prev,
+      { id, platform: "", link: "" }
+    ]);
   };
 
   const removeLink = (id: string) => {
@@ -98,33 +97,25 @@ export const DevlinksProvider: React.FC<DevlinksProviderProps> = ({ children }) 
       setIsListEdited(false);
     }
 
-    setDevlinksList((prev) => prev.filter((link) => link.id !== id));
+    setDevlinksList((prev:any) => prev.filter((link:any) => link.id !== id));
   };
 
   const addItemIntoList = (fieldId: string, platform: string, link: string) => {
-    const existingLink = devlinksList.find((item) => item.id === fieldId);
-    if (existingLink) {
-      setDevlinksList((prev) =>
-        prev.map((item) =>
+    setDevlinksList((prev:any) => {
+      const existingLink = prev.find((item:any) => item.id === fieldId);
+      if (existingLink) {
+        return prev.map((item:any) =>
           item.id === fieldId
-            ? {
-                ...item,
-                platform,
-                link,
-              }
+            ? { ...item, platform, link }
             : item
-        )
-      );
-    } else {
-      setDevlinksList((prev) => [
-        ...prev,
-        {
-          id: fieldId,
-          platform,
-          link,
-        },
-      ]);
-    }
+        );
+      } else {
+        return [
+          ...prev,
+          { id: fieldId, platform, link }
+        ];
+      }
+    });
   };
 
   const reorderList = (newOrderedList: DevLink[]) => {
@@ -138,7 +129,7 @@ export const DevlinksProvider: React.FC<DevlinksProviderProps> = ({ children }) 
     const linkRegex = /^(ftp|http|https):\/\/[^ "]+$/;
 
     for (const link of devlinksList) {
-      if (link.link.trim() === "") {
+      if (link.link?.trim() === "") {
         throwError(link.id, true, {
           link: {
             error: true,
@@ -188,12 +179,13 @@ export const DevlinksProvider: React.FC<DevlinksProviderProps> = ({ children }) 
       .then((devlinks) => {
         setLoading(false);
 
-        if (!devlinks) return;
-        setDevlinksList(devlinks);
+        if (devlinks) {
+          setDevlinksList(devlinks);
+        }
       })
       .catch((error) => {
         setLoading(false);
-        throw new Error(error);
+        console.error(error);
       });
   }, []);
 

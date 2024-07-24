@@ -26,7 +26,7 @@ interface UserPageContainerProps {
 }
 
 export default async function UserPageContainer({ displayName }: UserPageContainerProps) {
-  const userData: UserData | null = await getUserProfile(displayName);
+  const userData: UserData | any = await getUserProfile(displayName);
 
   if (!userData) {
     notFound();

@@ -36,7 +36,7 @@ const CustomizeLinks: React.FC = () => {
           <hr className="mb-5 border-neutral-borders" />
           <div className="px-6 md:text-end">
             <div className="md:inline-flex">
-              <Button style="primary" type="submit" disabled={isButtonDisabled}>
+              <Button style="primary" disabled={isButtonDisabled}>
                 Save
               </Button>
             </div>

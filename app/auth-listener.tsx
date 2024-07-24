@@ -8,7 +8,7 @@ import { createContext, useContext, useEffect, ReactNode } from "react";
 import { logout } from "@/lib/actions/auth";
 
 interface AuthContextType {
-  user: firebase.User | null | undefined;
+  user: any;
   loading: boolean;
 }
 

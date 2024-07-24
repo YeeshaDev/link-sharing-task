@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Input from "../UI/input/input";
 import { useUserProfileContext } from "@/context/user-profile-context";
-import { ErrorObject } from "@/lib/types/userProfile";
+import { ErrorObject,UserProfile } from "@/lib/types/userProfile";
 
 export default function ProfileInputGroup() {
   const {
@@ -12,16 +12,16 @@ export default function ProfileInputGroup() {
     handleError,
   } = useUserProfileContext();
 
-  const [firstName, setFirstName] = useState<string>(userObject["first_name"] || "");
-  const [lastName, setLastName] = useState<string>(userObject["last_name"] || "");
-  const [email, setEmail] = useState<string>(userObject["email"] || "");
+  const [firstName, setFirstName] = useState<string>(userObject.first_name || "");
+  const [lastName, setLastName] = useState<string>(userObject.last_name || "");
+  const [email, setEmail] = useState<string>(userObject.email || "");
   const [error, setError] = useState<ErrorObject>(errorObject);
   const [isFieldDirty, setIsFieldDirty] = useState<boolean>(false);
 
   useEffect(() => {
-    setFirstName(userObject["first_name"] || "");
-    setLastName(userObject["last_name"] || "");
-    setEmail(userObject["email"] || "");
+    setFirstName(userObject.first_name || "");
+    setLastName(userObject.last_name || "");
+    setEmail(userObject.email || "");
   }, [userObject]);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export default function ProfileInputGroup() {
   }, [errorObject]);
 
   const handleChanges = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
+    const { name, value } = event.target as HTMLInputElement;
     setError(prevError => ({
       ...prevError,
       [name]: { status: false, message: "" },
@@ -54,7 +54,7 @@ export default function ProfileInputGroup() {
 
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    const field = event.target.name;
+    const field = event.target.name as keyof UserProfile;
     if (value?.trim() === "") {
       setError(prevError => ({
         ...prevError,
