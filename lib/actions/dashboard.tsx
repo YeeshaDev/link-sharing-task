@@ -100,11 +100,11 @@ export const getUserProfileData = async (): Promise<UserProfileData | null> => {
     if (snapshot.exists()) {
       return snapshot.val() as UserProfileData;
     } else {
-      return null; // Return null if no profile data is found
+      return null; 
     }
   } catch (error) {
     console.error("Error fetching user profile data:", error);
-    return null; // Return null on error
+    return null; 
   }
 };
 

@@ -3,9 +3,9 @@ import Input from "../input/input";
 import Link from "next/link";
 
 interface ErrorDetails {
-  email?: string;
+  email?: string[];
   password?: string[];
-  confirmPassword?: string;
+  confirmPassword?: string[];
 }
 
 interface AuthFormState {
@@ -13,8 +13,8 @@ interface AuthFormState {
 }
 
 interface AuthFormProps {
-  action: string;
-  state: AuthFormState;
+  action: (payload: FormData) => Promise<AuthFormState | void>;
+  state: AuthFormState | null;
   type?: "login" | "register";
 }
 
@@ -26,21 +26,30 @@ function AuthForm({ action, state, type = "login" }: AuthFormProps) {
   const registerForm = type === "register";
 
   return (
-    <form action={action} className="flex flex-col gap-5">
-      <div>
+    <form
+      onSubmit={async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+        await action(formData);
+      }}
+      className="flex flex-col gap-3"
+    >
+      <div className="relative">
         <Input
           id="email"
           name="email"
           title="Email Address"
           type="email"
           placeholder="e.g. alex@email.com"
-          error={state?.errors?.email}
+          error={state?.errors?.email?.[0]}
         />
         {state?.errors?.email && (
-          <p className="text-error text-sm italic">{state.errors.email}</p>
+          <p className="absolute top-1/2 right-1 text-error text-sm">
+            {state?.errors?.email[0]}
+          </p>
         )}
       </div>
-      <div>
+      <div className="relative">
         <Input
           id="password"
           name="password"
@@ -49,34 +58,30 @@ function AuthForm({ action, state, type = "login" }: AuthFormProps) {
           placeholder={
             registerForm ? "At least 8 characters" : "Enter your password"
           }
-          error={state?.errors?.password}
+          error={state?.errors?.password?.[0]}
         />
+        <p className="text-sm">Password must be at least 8 characters long</p>
         {state?.errors?.password && (
           <div className="text-error">
-            <p className="text-sm italic">Password must:</p>
-            <ul>
-              {state.errors.password.map((error) => (
-                <li className="text-xs" key={error}>
-                  - {error}
-                </li>
-              ))}
-            </ul>
+            <p className="absolute top-[45%] right-1 text-error text-sm ">
+              {state?.errors?.password[0]}
+            </p>
           </div>
         )}
       </div>
       {registerForm && (
-        <div>
+        <div className="relative">
           <Input
             id="confirm-password"
             name="confirm-password"
             title="Confirm password"
             type="password"
             placeholder="Re-enter your password"
-            error={state?.errors?.confirmPassword}
+            error={state?.errors?.confirmPassword?.[0]}
           />
           {state?.errors?.confirmPassword && (
-            <p className="text-error text-sm italic">
-              {state.errors.confirmPassword}
+            <p className="absolute top-1/2 right-1 text-error text-sm ">
+              {state.errors.confirmPassword[0]}
             </p>
           )}
         </div>

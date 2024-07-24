@@ -8,9 +8,9 @@ export type UserProfileValues = z.infer<typeof UserProfileSchema>;
 export const SignupFormSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email." }).trim(),
   password: z
-    .string()
-    .min(8, { message: "Password must be at least 8 characters long." })
-    .trim(),
+  .string()
+  .min(1, { message: "Password cannot be empty" })
+  .trim(),
   confirmPassword: z.string(),
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords don't match",
@@ -21,7 +21,7 @@ export const SigninFormSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email." }).trim(),
   password: z
     .string()
-    .min(8, { message: "Password must be at least 8 characters long." })
+    .min(8, { message: "Please enter a valid password." })
     .trim(),
 });
 

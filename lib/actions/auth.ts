@@ -9,7 +9,7 @@ import {
 
 import { redirect } from "next/navigation";
 
-import { SigninFormSchema, SignupFormSchema } from "../definitions";
+import { SigninFormSchema, SignupFormSchema } from "../formValidationSchema";
 import toast from "react-hot-toast";
 import { ref, set } from "firebase/database";
 import { database } from "@/firebase-config";
@@ -48,7 +48,7 @@ interface FormData {
 }
 
 // signup
-export const signup = async (state: unknown, formData: FormData): Promise<{ errors?: Record<string, string[]> }> => {
+export const signup = async (state: unknown, formData: FormData): Promise<{ errors?: Record<string, string[]> } | void> => {
   const id = generateId(6);
 
   const validatedFields = SignupFormSchema.safeParse({
@@ -64,20 +64,24 @@ export const signup = async (state: unknown, formData: FormData): Promise<{ erro
   }
 
   const { email, password } = validatedFields.data;
-  const { user } = await createUserWithEmailAndPassword(auth, email, password).catch((error) => {
+  try {
+    const { user } = await createUserWithEmailAndPassword(auth, email, password);
+
+    if (user) {
+      await updateProfile(user, {
+        displayName: id,
+      });
+
+      await writeInitialUserData(id);
+
+      toast.success("Account created successfully!");
+      redirect("/customize-links");
+    }
+  } catch (error) {
     handleFirebaseAuthErrors(error);
-    return { user: null };
-  });
-
-  if (user) {
-    await updateProfile(user, {
-      displayName: id,
-    });
-
-    await writeInitialUserData(id);
-
-    toast.success("Account created successfully!");
-    redirect("/customize-links");
+    return {
+      errors: { general: ["Failed to create account"] },
+    };
   }
 };
 
@@ -95,16 +99,19 @@ export const signin = async (state: unknown, formData: FormData): Promise<{ erro
   }
 
   const { email, password } = validatedFields.data;
-  const { user } = await signInWithEmailAndPassword(auth, email, password).catch((error) => {
-    handleFirebaseAuthErrors(error);
-    return;
-  });
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
 
-  if (user) {
-    toast.success("Login successful!");
-    redirect("/customize-links");
-  } else {
-    throw new Error("Failed to login");
+    if (user) {
+      toast.success("Login successful!");
+      redirect("/customize-links");
+    }
+  } catch (error) {
+    handleFirebaseAuthErrors(error);
+    return {
+      errors: { general: ["Failed to login"] },
+    };
   }
 };
 
