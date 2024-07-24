@@ -4,6 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
+.prettierrc
 .yarn/install-state.gz
 
 # testing

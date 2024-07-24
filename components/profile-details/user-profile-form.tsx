@@ -1,13 +1,13 @@
-"use client";
+'use client'
 
-import Button from "../UI/button/button";
-import UploadImage from "./upload-image";
-import ProfileInputGroup from "./profile-input-group";
-import { useUserProfileContext } from "@/context/user-profile-context";
-import UserProfileDetailSkeleton from "../UI/loading/user-profile-detail-skeleton";
+import Button from '../UI/button/button'
+import UploadImage from './upload-image'
+import ProfileInputGroup from './profile-input-group'
+import { useUserProfileContext } from '@/context/user-profile-context'
+import UserProfileDetailSkeleton from '../UI/loading/user-profile-detail-skeleton'
 
 function UserProfileForm() {
-  const { handleSubmit, buttonDisabled, loading } = useUserProfileContext();
+  const { handleSubmit, buttonDisabled, loading } = useUserProfileContext()
 
   return (
     <>
@@ -29,7 +29,7 @@ function UserProfileForm() {
             <hr className="mb-5 border-neutral-borders" />
             <div className="px-6 md:text-end">
               <div className="md:inline-flex">
-                <Button style="primary"  disabled={buttonDisabled}>
+                <Button style="primary" disabled={buttonDisabled}>
                   Save
                 </Button>
               </div>
@@ -38,7 +38,7 @@ function UserProfileForm() {
         </div>
       </form>
     </>
-  );
+  )
 }
 
-export default UserProfileForm;
+export default UserProfileForm

@@ -1,4 +1,4 @@
-function Codewars({color = "#737373"}) {
+function Codewars({ color = '#737373' }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -19,7 +19,7 @@ function Codewars({color = "#737373"}) {
         </clipPath>
       </defs>
     </svg>
-  );
+  )
 }
 
-export default Codewars;
+export default Codewars

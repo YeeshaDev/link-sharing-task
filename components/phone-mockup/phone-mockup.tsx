@@ -1,15 +1,15 @@
-"use client";
-import { useDevlinksContext } from "@/context/devlink-context";
-import Image from "next/image";
-import DevLink from "../customize-links/dev-link";
-import { useUserProfileContext } from "@/context/user-profile-context";
-import { usePathname } from "next/navigation";
+'use client'
+import { useDevlinksContext } from '@/context/devlink-context'
+import Image from 'next/image'
+import DevLink from '../customize-links/dev-link'
+import { useUserProfileContext } from '@/context/user-profile-context'
+import { usePathname } from 'next/navigation'
 
 function PhoneMockup() {
-  const { devlinksList } = useDevlinksContext();
-  const { userObject, userProfilePicMockup } = useUserProfileContext();
+  const { devlinksList } = useDevlinksContext()
+  const { userObject, userProfilePicMockup } = useUserProfileContext()
 
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   return (
     <>
@@ -42,10 +42,12 @@ function PhoneMockup() {
               )}
             </div>
           ) : (
-            ""
+            ''
           )}
 
-          {userObject?.first_name || userObject?.last_name || userObject.email ? (
+          {userObject?.first_name ||
+          userObject?.last_name ||
+          userObject.email ? (
             <>
               <p className="text-neutral-dark-grey text-center font-semibold text-lg w-[90%] mt-5 bg-white overflow-hidden">
                 {userObject?.first_name} {userObject.last_name}
@@ -58,23 +60,23 @@ function PhoneMockup() {
               </a>
             </>
           ) : (
-            ""
+            ''
           )}
         </div>
         <div className="flex items-center justify-center">
           <ul
             className={`absolute top-[17.3rem] w-[90%] max-h-[320px] flex flex-col items-center overflow-auto bg-white rounded-b-3xl ${
-              pathname === "/profile-details" ? "h-[320px]" : ""
+              pathname === '/profile-details' ? 'h-[320px]' : ''
             }`}
           >
-            {devlinksList?.map((link:any) => (
+            {devlinksList?.map((link: any) => (
               <DevLink key={link.id} link={link} mockup />
             ))}
           </ul>
         </div>
       </div>
     </>
-  );
+  )
 }
 
-export default PhoneMockup;
+export default PhoneMockup

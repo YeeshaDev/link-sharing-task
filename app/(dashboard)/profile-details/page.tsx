@@ -1,5 +1,5 @@
-import HeadingGroup from "@/components/UI/heading/heading-group";
-import UserProfileForm from "@/components/profile-details/user-profile-form";
+import HeadingGroup from '@/components/UI/heading/heading-group'
+import UserProfileForm from '@/components/profile-details/user-profile-form'
 
 export default function ProfileDetailsPage() {
   return (
@@ -12,5 +12,5 @@ export default function ProfileDetailsPage() {
       </div>
       <UserProfileForm />
     </>
-  );
+  )
 }
