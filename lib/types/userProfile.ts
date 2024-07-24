@@ -11,6 +11,11 @@ export interface ErrorObject {
   };
 }
 
+export interface AuthFormState {
+  errors?: Record<string, string[]>;
+}
+
+
 export interface UserProfileContext {
   userObject: UserObject;
   handleFieldEdit: (isDirty: boolean) => void;

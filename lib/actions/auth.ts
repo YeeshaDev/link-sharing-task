@@ -6,15 +6,14 @@ import {
   updateProfile,
   User,
 } from "firebase/auth";
-
 import { redirect } from "next/navigation";
-
 import { SigninFormSchema, SignupFormSchema } from "../formValidationSchema";
 import toast from "react-hot-toast";
 import { ref, set } from "firebase/database";
 import { database } from "@/firebase-config";
 import { handleFirebaseAuthErrors } from "../utils/handle-firebase-errors";
 import { generateId } from "../utils/helpers";
+import { AuthFormState } from "../types/userProfile";
 
 // Define the type for initial profile data
 interface InitialProfileData {
@@ -43,12 +42,13 @@ export const writeInitialUserData = async (id: string): Promise<void> => {
   }
 };
 
+// Define the type for FormData
 interface FormData {
   get(name: string): FormDataEntryValue | null;
 }
 
-// signup
-export const signup = async (state: unknown, formData: FormData): Promise<{ errors?: Record<string, string[]> } | void> => {
+// Update signup function
+export const signup = async (state: AuthFormState | any, formData: FormData): Promise<void | AuthFormState> => {
   const id = generateId(6);
 
   const validatedFields = SignupFormSchema.safeParse({
@@ -85,7 +85,7 @@ export const signup = async (state: unknown, formData: FormData): Promise<{ erro
   }
 };
 
-// signin
+// Signin
 export const signin = async (state: unknown, formData: FormData): Promise<{ errors?: Record<string, string[]> } | void> => {
   const validatedFields = SigninFormSchema.safeParse({
     email: formData.get("email"),
@@ -115,6 +115,9 @@ export const signin = async (state: unknown, formData: FormData): Promise<{ erro
   }
 };
 
+// Logout function
 export function logout(): void {
-  signOut(auth);
+  signOut(auth).catch((error) => {
+    console.error("Failed to log out:", error);
+  });
 }

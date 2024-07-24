@@ -13,8 +13,8 @@ interface AuthFormState {
 }
 
 interface AuthFormProps {
-  action: (payload: FormData) => Promise<AuthFormState | void>;
-  state: AuthFormState | null;
+  action: (payload: FormData) => Promise<void | AuthFormState> | any;
+  state: AuthFormState | any;
   type?: "login" | "register";
 }
 
