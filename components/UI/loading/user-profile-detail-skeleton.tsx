@@ -41,5 +41,5 @@ export default function UserProfileDetailSkeleton() {
         </div>
       </div>
     </div>
-  );
+  )
 }

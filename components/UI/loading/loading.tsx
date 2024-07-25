@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from 'next/image'
 
 function Loading() {
   return (
@@ -12,7 +12,7 @@ function Loading() {
         />
       </div>
     </div>
-  );
+  )
 }
 
-export default Loading;
+export default Loading

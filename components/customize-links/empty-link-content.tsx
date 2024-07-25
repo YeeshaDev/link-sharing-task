@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from 'next/image'
 
 function EmptyLinkContent() {
   return (
@@ -20,7 +20,7 @@ function EmptyLinkContent() {
         </p>
       </div>
     </div>
-  );
+  )
 }
 
-export default EmptyLinkContent;
+export default EmptyLinkContent

@@ -1,4 +1,4 @@
-function Hashnode({color = '#737373', size = 16}) {
+function Hashnode({ color = '#737373', size = 16 }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -19,7 +19,7 @@ function Hashnode({color = '#737373', size = 16}) {
         </clipPath>
       </defs>
     </svg>
-  );
+  )
 }
 
-export default Hashnode;
+export default Hashnode

@@ -75,14 +75,17 @@ export const signup = async (state: AuthFormState | any, formData: FormData): Pr
       await writeInitialUserData(id);
 
       toast.success("Account created successfully!");
-      redirect("/customize-links");
+     
     }
   } catch (error) {
     handleFirebaseAuthErrors(error);
     return {
       errors: { general: ["Failed to create account"] },
     };
-  }
+     
+  }finally{
+    redirect("/customize-links");
+     }
 };
 
 // Signin
@@ -105,7 +108,7 @@ export const signin = async (state: unknown, formData: FormData): Promise<{ erro
 
     if (user) {
       toast.success("Login successful!");
-      redirect("/customize-links");
+     
     }
   } catch (error) {
     handleFirebaseAuthErrors(error);
@@ -113,6 +116,9 @@ export const signin = async (state: unknown, formData: FormData): Promise<{ erro
       errors: { general: ["Failed to login"] },
     };
   }
+  finally{
+    redirect("/customize-links");
+     }
 };
 
 // Logout function

@@ -1,36 +1,38 @@
-import { getUserProfile } from "@/lib/actions/dashboard";
-import DisplayUserProfile from "./display-user-profile-detail";
-import DisplayDevlinkList from "./display-devlink-list";
-import { notFound } from "next/navigation";
+import { getUserProfile } from '@/lib/actions/dashboard'
+import DisplayUserProfile from './display-user-profile-detail'
+import DisplayDevlinkList from './display-devlink-list'
+import { notFound } from 'next/navigation'
 
 interface Profile {
-  profile_picture?: string;
-  first_name?: string;
-  last_name?: string;
-  email?: string;
+  profile_picture?: string
+  first_name?: string
+  last_name?: string
+  email?: string
 }
 
 interface DevLink {
-  id: string;
-  platform: string;
-  link: string;
+  id: string
+  platform: string
+  link: string
 }
 
 interface UserData {
-  profile: Profile;
-  devlinks: DevLink[];
+  profile: Profile
+  devlinks: DevLink[]
 }
 
 interface UserPageContainerProps {
-  displayName: string;
+  displayName: string
 }
 
-export default async function UserPageContainer({ displayName }: UserPageContainerProps) {
-  const userData: UserData | any = await getUserProfile(displayName);
+export default async function UserPageContainer({
+  displayName,
+}: UserPageContainerProps) {
+  const userData: UserData | any = await getUserProfile(displayName)
 
   if (!userData) {
-    notFound();
-    return null; 
+    notFound()
+    return null
   }
 
   return (
@@ -44,5 +46,5 @@ export default async function UserPageContainer({ displayName }: UserPageContain
         </div>
       )}
     </div>
-  );
+  )
 }

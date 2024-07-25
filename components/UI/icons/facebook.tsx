@@ -1,4 +1,4 @@
-function Facebook({ color = "#737373", size = 16 }) {
+function Facebook({ color = '#737373', size = 16 }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -19,7 +19,7 @@ function Facebook({ color = "#737373", size = 16 }) {
         </clipPath>
       </defs>
     </svg>
-  );
+  )
 }
 
-export default Facebook;
+export default Facebook

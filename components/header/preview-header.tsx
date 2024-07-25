@@ -1,33 +1,33 @@
-"use client";
+'use client'
 
-import Link from "next/link";
-import Button from "../UI/button/button";
-import toast from "react-hot-toast";
-import { auth } from "@/firebase-config";
-import { useAuthState } from "react-firebase-hooks/auth";
-import CopiedIcon from "../UI/icons/link-copied-clipboard";
-import React from "react";
+import Link from 'next/link'
+import Button from '../UI/button/button'
+import toast from 'react-hot-toast'
+import { auth } from '@/firebase-config'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import CopiedIcon from '../UI/icons/link-copied-clipboard'
+import React from 'react'
 
 const PageHeader: React.FC = () => {
-  const [user] = useAuthState(auth);
-  const isAuthenticated = !!user;
+  const [user] = useAuthState(auth)
+  const isAuthenticated = !!user
 
   const copyCurrentURL = () => {
-    const currentURL = window.location.href;
+    const currentURL = window.location.href
 
-    const tempInputField = document.createElement("input");
-    tempInputField.value = currentURL;
-    document.body.appendChild(tempInputField);
+    const tempInputField = document.createElement('input')
+    tempInputField.value = currentURL
+    document.body.appendChild(tempInputField)
 
-    tempInputField.select();
-    document.execCommand("copy");
+    tempInputField.select()
+    document.execCommand('copy')
 
-    document.body.removeChild(tempInputField);
+    document.body.removeChild(tempInputField)
 
-    toast("Link copied to your clipboard!", {
+    toast('Link copied to your clipboard!', {
       icon: <CopiedIcon />,
-    });
-  };
+    })
+  }
 
   return (
     <header className="w-full h-[78px] md:p-4">
@@ -42,14 +42,14 @@ const PageHeader: React.FC = () => {
             </Link>
           </div>
           <div className="flex-1 md:flex-none">
-            <Button style={"primary"} onClick={copyCurrentURL}>
+            <Button style={'primary'} onClick={copyCurrentURL}>
               Share Link
             </Button>
           </div>
         </div>
       )}
     </header>
-  );
-};
+  )
+}
 
-export default PageHeader;
+export default PageHeader

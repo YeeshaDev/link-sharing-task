@@ -1,36 +1,36 @@
-import Button from "../button/button";
-import Input from "../input/input";
-import Link from "next/link";
+import Button from '../button/button'
+import Input from '../input/input'
+import Link from 'next/link'
 
 interface ErrorDetails {
-  email?: string[];
-  password?: string[];
-  confirmPassword?: string[];
+  email?: string[]
+  password?: string[]
+  confirmPassword?: string[]
 }
 
 interface AuthFormState {
-  errors?: ErrorDetails;
+  errors?: ErrorDetails
 }
 
 interface AuthFormProps {
-  action: (payload: FormData) => Promise<void | AuthFormState> | any;
-  state: AuthFormState | any;
-  type?: "login" | "register";
+  action: (payload: FormData) => Promise<void | AuthFormState> | any
+  state: AuthFormState | any
+  type?: 'login' | 'register'
 }
 
-function AuthForm({ action, state, type = "login" }: AuthFormProps) {
+function AuthForm({ action, state, type = 'login' }: AuthFormProps) {
   if (!action) {
-    throw new Error("Action is required for AuthForm component");
+    throw new Error('Action is required for AuthForm component')
   }
 
-  const registerForm = type === "register";
+  const registerForm = type === 'register'
 
   return (
     <form
       onSubmit={async (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.currentTarget);
-        await action(formData);
+        e.preventDefault()
+        const formData = new FormData(e.currentTarget)
+        await action(formData)
       }}
       className="flex flex-col gap-3"
     >
@@ -53,10 +53,10 @@ function AuthForm({ action, state, type = "login" }: AuthFormProps) {
         <Input
           id="password"
           name="password"
-          title={registerForm ? "Create password" : "Password"}
+          title={registerForm ? 'Create password' : 'Password'}
           type="password"
           placeholder={
-            registerForm ? "At least 8 characters" : "Enter your password"
+            registerForm ? 'At least 8 characters' : 'Enter your password'
           }
           error={state?.errors?.password?.[0]}
         />
@@ -88,12 +88,12 @@ function AuthForm({ action, state, type = "login" }: AuthFormProps) {
       )}
 
       <Button style="primary" disabled={false}>
-        {registerForm ? "Create new account" : "Login"}
+        {registerForm ? 'Create new account' : 'Login'}
       </Button>
       <div>
         <div className="text-center">
           {registerForm ? (
-            <>
+            <div className="flex items-center justify-center gap-x-2">
               <p className="text-sm text-neutral-grey">
                 Already have an account?
               </p>
@@ -103,9 +103,9 @@ function AuthForm({ action, state, type = "login" }: AuthFormProps) {
               >
                 Login
               </Link>
-            </>
+            </div>
           ) : (
-            <>
+            <div className="flex items-center justify-center gap-x-2">
               <p className="text-sm text-neutral-grey">
                 Don&apos;t have an account?
               </p>
@@ -115,12 +115,12 @@ function AuthForm({ action, state, type = "login" }: AuthFormProps) {
               >
                 Create account
               </Link>
-            </>
+            </div>
           )}
         </div>
       </div>
     </form>
-  );
+  )
 }
 
-export default AuthForm;
+export default AuthForm

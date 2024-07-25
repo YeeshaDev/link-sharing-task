@@ -1,19 +1,14 @@
-"use client";
+'use client'
 
-import { useDevlinksContext } from "@/context/devlink-context";
-import EmptyLinkContent from "./empty-link-content";
-import Button from "../UI/button/button";
-import LinksList from "./customize-links-list";
-import LinkContainerSkeleton from "../UI/loading/links-container-skeleton";
+import { useDevlinksContext } from '@/context/devlink-context'
+import EmptyLinkContent from './empty-link-content'
+import Button from '../UI/button/button'
+import LinksList from './customize-links-list'
+import LinkContainerSkeleton from '../UI/loading/links-container-skeleton'
 
 const CustomizeLinks: React.FC = () => {
-  const {
-    devlinksList,
-    addNewLink,
-    isButtonDisabled,
-    loading,
-    handleSubmit,
-  } = useDevlinksContext();
+  const { devlinksList, addNewLink, isButtonDisabled, loading, handleSubmit } =
+    useDevlinksContext()
 
   return (
     <>
@@ -44,7 +39,7 @@ const CustomizeLinks: React.FC = () => {
         </div>
       </form>
     </>
-  );
-};
+  )
+}
 
-export default CustomizeLinks;
+export default CustomizeLinks

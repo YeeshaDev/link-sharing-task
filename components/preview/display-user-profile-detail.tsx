@@ -1,14 +1,14 @@
-import Image from "next/image";
+import Image from 'next/image'
 
 interface Profile {
-  profile_picture?: string;
-  first_name?: string;
-  last_name?: string;
-  email?: string;
+  profile_picture?: string
+  first_name?: string
+  last_name?: string
+  email?: string
 }
 
 interface DisplayUserProfileProps {
-  profile: Profile;
+  profile: Profile
 }
 
 const DisplayUserProfile: React.FC<DisplayUserProfileProps> = ({ profile }) => {
@@ -51,7 +51,7 @@ const DisplayUserProfile: React.FC<DisplayUserProfileProps> = ({ profile }) => {
         {profile.email}
       </a>
     </div>
-  );
-};
+  )
+}
 
-export default DisplayUserProfile;
+export default DisplayUserProfile

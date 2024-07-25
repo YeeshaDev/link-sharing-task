@@ -1,13 +1,13 @@
-"use client";
+'use client'
 
-import Link from "next/link";
-import Tabs from "../UI/tabs/tabs";
-import Image from "next/image";
-import PreviewIcon from "../UI/icons/preview";
-import { useAuthContext } from "@/app/auth-listener";
+import Link from 'next/link'
+import Tabs from '../UI/tabs/tabs'
+import Image from 'next/image'
+import PreviewIcon from '../UI/icons/preview'
+import { useAuthContext } from '@/app/auth-listener'
 
 export default function DashboardHeader() {
-  const { user } = useAuthContext();
+  const { user } = useAuthContext()
   return (
     <div className="md:bg-neutral-light-grey md:pt-4 md:px-4">
       <header className="flex items-center justify-between px-5 py-4 md:bg-white md:rounded-xl">
@@ -33,19 +33,19 @@ export default function DashboardHeader() {
         </Link>
         {/* sm tabs */}
         <Tabs className="md:hidden">
-          <Tabs.Item id={"/customize-links"} href={`/customize-links`}>
+          <Tabs.Item id={'/customize-links'} href={`/customize-links`}>
             <Tabs.Title></Tabs.Title>
           </Tabs.Item>
-          <Tabs.Item id={"/profile-details"} href={`/profile-details`}>
+          <Tabs.Item id={'/profile-details'} href={`/profile-details`}>
             <Tabs.Title></Tabs.Title>
           </Tabs.Item>
         </Tabs>
         {/* md tabs */}
         <Tabs className="hidden md:block">
-          <Tabs.Item id={"/customize-links"} href={`/customize-links`}>
+          <Tabs.Item id={'/customize-links'} href={`/customize-links`}>
             <Tabs.Title>Links</Tabs.Title>
           </Tabs.Item>
-          <Tabs.Item id={"/profile-details"} href={`/profile-details`}>
+          <Tabs.Item id={'/profile-details'} href={`/profile-details`}>
             <Tabs.Title>Profile Details</Tabs.Title>
           </Tabs.Item>
         </Tabs>
@@ -69,5 +69,5 @@ export default function DashboardHeader() {
         </div>
       </header>
     </div>
-  );
+  )
 }

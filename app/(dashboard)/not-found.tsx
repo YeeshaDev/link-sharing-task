@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from 'next/link'
 
 function NotFound() {
   return (
@@ -31,7 +31,7 @@ function NotFound() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default NotFound;
+export default NotFound

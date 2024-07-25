@@ -1,5 +1,5 @@
-import HeadingGroup from "@/components/UI/heading/heading-group";
-import CustomizeLinks from "@/components/customize-links/customize-links";
+import HeadingGroup from '@/components/UI/heading/heading-group'
+import CustomizeLinks from '@/components/customize-links/customize-links'
 
 export default function CustomizeLinksPage() {
   return (
@@ -12,5 +12,5 @@ export default function CustomizeLinksPage() {
       </div>
       <CustomizeLinks />
     </>
-  );
+  )
 }

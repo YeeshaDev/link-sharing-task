@@ -23,7 +23,7 @@ function SavedIcon() {
         </clipPath>
       </defs>
     </svg>
-  );
+  )
 }
 
-export default SavedIcon;
+export default SavedIcon

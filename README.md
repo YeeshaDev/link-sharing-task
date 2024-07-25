@@ -1,4 +1,3 @@
-
 # 🌐 Devlinks Link Sharing App
 
 Welcome to **Devlinks**, a fullstack application developed using **Next.js**, **Firebase**, and **TailwindCSS**. This project is part of HNG Task 5, aimed at building efficiency and enhancing skills.
@@ -25,17 +24,20 @@ Devlinks allows users to create personalized profiles, manage links, and customi
 To get started with Devlinks, follow these steps:
 
 1. **Clone the Repository**:
+
    ```bash
    git clone https://github.com/YeeshaDev/link-sharing-task.git
    cd link-sharing-task
    ```
 
 2. **Install Dependencies**:
+
    ```bash
    npm install
    ```
 
 3. **Set Up Firebase**:
+
    - Create a Firebase project.
    - Add your Firebase configuration to a `.env` file.
 
@@ -49,4 +51,3 @@ To get started with Devlinks, follow these steps:
 ![App Preview](https://res.cloudinary.com/debgkcg8v/image/upload/v1721844774/Desktop_-_Empty_-_Active_jdxefi.png)
 ![App Preview](https://res.cloudinary.com/debgkcg8v/image/upload/v1721844750/Desktop_-_Profile_-_Active_vgkgph.jpg)
 ![App Preview](https://res.cloudinary.com/debgkcg8v/image/upload/v1721844738/Desktop_-_Preview_-_Active_wkvgzt.png)
-

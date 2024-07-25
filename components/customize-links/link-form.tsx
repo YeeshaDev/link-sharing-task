@@ -1,34 +1,39 @@
-"use client";
+'use client'
 
-import { useDevlinksContext } from "@/context/devlink-context";
-import { useEffect, useState, ChangeEvent, FocusEvent } from "react";
-import Dropdown from "../UI/input/dropdown";
-import Input from "../UI/input/input";
-import Image from "next/image";
+import { useDevlinksContext } from '@/context/devlink-context'
+import { useEffect, useState, ChangeEvent, FocusEvent } from 'react'
+import Dropdown from '../UI/input/dropdown'
+import Input from '../UI/input/input'
+import Image from 'next/image'
 
 interface LinkFormProps {
-  fieldId: string;
-  index: number;
-  platform: string;
-  link: string;
+  fieldId: string
+  index: number
+  platform: string
+  link: string
 }
 
 interface ErrorState {
-  id: string;
-  status?: boolean;
+  id: string
+  status?: boolean
   field?: {
     link?: {
-      error: boolean;
-      message: string;
-    };
+      error: boolean
+      message: string
+    }
     platform?: {
-      error: boolean;
-      message: string;
-    };
-  };
+      error: boolean
+      message: string
+    }
+  }
 }
 
-const LinkForm: React.FC<LinkFormProps> = ({ fieldId, index, platform, link }) => {
+const LinkForm: React.FC<LinkFormProps> = ({
+  fieldId,
+  index,
+  platform,
+  link,
+}) => {
   const {
     removeLink,
     addItemIntoList,
@@ -36,77 +41,77 @@ const LinkForm: React.FC<LinkFormProps> = ({ fieldId, index, platform, link }) =
     throwError,
     removeError,
     changeIsEditedValue,
-    isListEdited
-  } = useDevlinksContext();
-  const [userLink, setUserLink] = useState<string>(link);
-  const [userPlatform, setUserPlatform] = useState<string>(platform);
-  const [error, setError] = useState<ErrorState | undefined>(undefined);
-  const [isFieldDirty, setIsFieldDirty] = useState<boolean>(isListEdited);
+    isListEdited,
+  } = useDevlinksContext()
+  const [userLink, setUserLink] = useState<string>(link)
+  const [userPlatform, setUserPlatform] = useState<string>(platform)
+  const [error, setError] = useState<ErrorState | undefined>(undefined)
+  const [isFieldDirty, setIsFieldDirty] = useState<boolean>(isListEdited)
 
   useEffect(() => {
-    changeIsEditedValue(isFieldDirty);
-  }, [isFieldDirty, userLink, userPlatform]);
+    changeIsEditedValue(isFieldDirty)
+  }, [isFieldDirty, userLink, userPlatform])
 
   useEffect(() => {
-    setIsFieldDirty(isListEdited);
-  }, [isListEdited]);
+    setIsFieldDirty(isListEdited)
+  }, [isListEdited])
 
   useEffect(() => {
-    const errorObj = errorState.find((error) => error.id === fieldId);
-    setError(errorObj);
-  }, [errorState, fieldId]);
+    const errorObj = errorState.find((error) => error.id === fieldId)
+    setError(errorObj)
+  }, [errorState, fieldId])
 
   const handleLinkChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setIsFieldDirty(true);
-    removeError(fieldId);
-    setUserLink(event.target.value);
-  };
+    setIsFieldDirty(true)
+    removeError(fieldId)
+    setUserLink(event.target.value)
+  }
 
   const handlePlatformChange = (value: string) => {
-    removeError(fieldId);
-    setUserPlatform(value);
-    addItemIntoList(fieldId, value, userLink);
-  };
+    removeError(fieldId)
+    setUserPlatform(value)
+    addItemIntoList(fieldId, value, userLink)
+  }
 
   const handleInputBlur = (event: FocusEvent<HTMLInputElement>) => {
-    const linkValue = event.target.value;
-    const linkRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-    if (linkValue?.trim() === "") {
+    const linkValue = event.target.value
+    const linkRegex = /^(ftp|http|https):\/\/[^ "]+$/
+    if (linkValue?.trim() === '') {
       throwError(fieldId, true, {
         link: {
           error: true,
           message: "Can't be empty",
         },
-      });
+      })
 
-      return;
+      return
     } else if (linkValue && !linkRegex.test(linkValue)) {
       throwError(fieldId, true, {
         link: {
           error: true,
-          message: "Invalid URL",
+          message: 'Invalid URL',
         },
-      });
-      return;
-    } else if (linkValue.length > 0 && userPlatform.trim() === "") {
+      })
+      return
+    } else if (linkValue.length > 0 && userPlatform.trim() === '') {
       throwError(fieldId, true, {
         platform: {
           error: true,
-          message: "Select a platform",
+          message: 'Select a platform',
         },
-      });
-      return;
+      })
+      return
     }
 
-    setIsFieldDirty(true);
-    addItemIntoList(fieldId, userPlatform, userLink);
-  };
+    setIsFieldDirty(true)
+    addItemIntoList(fieldId, userPlatform, userLink)
+  }
 
   return (
     <div>
       <div
         className={`flex flex-col gap-2 mb-6 p-4 rounded-xl bg-neutral-light-grey ${
-          error?.status ? "border border-error" : ""
+          error?.status ? 'border border-error' : ''
         }`}
       >
         <div className="flex items-center justify-between pt-1">
@@ -154,7 +159,7 @@ const LinkForm: React.FC<LinkFormProps> = ({ fieldId, index, platform, link }) =
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default LinkForm;
+export default LinkForm

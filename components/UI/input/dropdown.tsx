@@ -1,23 +1,23 @@
-"use client";
+'use client'
 
-import React, { useEffect, useState } from "react";
-import allMenuList from "@/lib/all-menu-list";
-import Image from "next/image";
+import React, { useEffect, useState } from 'react'
+import allMenuList from '@/lib/all-menu-list'
+import Image from 'next/image'
 
 // types for the menu item
 interface MenuItem {
-  name: string;
-  icon: React.ReactElement;
+  name: string
+  icon: React.ReactElement
 }
 
 // types for the Dropdown component props
 interface DropdownProps {
-  name: string;
-  onChange: (value: string) => void;
-  onClick?: () => void;
-  value?: string;
-  error?: boolean;
-  errorMessage?: string;
+  name: string
+  onChange: (value: string) => void
+  onClick?: () => void
+  value?: string
+  error?: boolean
+  errorMessage?: string
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
@@ -29,67 +29,74 @@ const Dropdown: React.FC<DropdownProps> = ({
   errorMessage,
 }) => {
   if (!name) {
-    throw new Error("Name is required for Dropdown component");
+    throw new Error('Name is required for Dropdown component')
   } else if (!onChange) {
-    throw new Error("onChange is required for Dropdown component");
+    throw new Error('onChange is required for Dropdown component')
   }
 
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [onMouseEnter, setOnMouseEnter] = useState<{ name: string; status: boolean }>({ name: "", status: false });
-  const [selectedValue, setSelectedValue] = useState<MenuItem | null>(null);
-  const [hiddenInputValue, setHiddenInputValue] = useState("");
+  const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [onMouseEnter, setOnMouseEnter] = useState<{
+    name: string
+    status: boolean
+  }>({ name: '', status: false })
+  const [selectedValue, setSelectedValue] = useState<MenuItem | null>(null)
+  const [hiddenInputValue, setHiddenInputValue] = useState('')
 
   // Toggle dropdown open/close
   const toggleDropdown = () => {
-    setDropdownOpen((prev) => !prev);
-  };
+    setDropdownOpen((prev) => !prev)
+  }
 
   // Handle mouse enter and leave
   const handleMouseEnter = (fieldName: string) => {
     setOnMouseEnter((prev) =>
       prev.name === fieldName
-        ? { name: "", status: true }
+        ? { name: '', status: true }
         : { name: fieldName, status: true }
-    );
-  };
+    )
+  }
 
   const handleMouseLeave = (fieldName: string) => {
     setOnMouseEnter((prev) =>
       prev.name === fieldName
-        ? { name: "", status: false }
+        ? { name: '', status: false }
         : { name: fieldName, status: false }
-    );
-  };
+    )
+  }
 
   // Handle selected value change
   const handleSelectedValue = (menuItem: MenuItem) => {
-    setSelectedValue(menuItem);
-    setHiddenInputValue(menuItem.name);
-    onChange(menuItem.name); 
-  };
+    setSelectedValue(menuItem)
+    setHiddenInputValue(menuItem.name)
+    onChange(menuItem.name)
+  }
 
-  
   useEffect(() => {
     if (value) {
-      const menuItem = allMenuList.find((item) => item.name === value) || null;
-      setSelectedValue(menuItem);
-      setHiddenInputValue(menuItem ? menuItem.name : "");
+      const menuItem = allMenuList.find((item) => item.name === value) || null
+      setSelectedValue(menuItem)
+      setHiddenInputValue(menuItem ? menuItem.name : '')
     }
-  }, [value]);
+  }, [value])
 
   return (
     <div className="py-1 relative">
-      <input type="hidden" placeholder="Select a platform" name={"platform-" + name} value={hiddenInputValue} />
+      <input
+        type="hidden"
+        placeholder="Select a platform"
+        name={'platform-' + name}
+        value={hiddenInputValue}
+      />
       <label
-        htmlFor={"platform-" + name}
+        htmlFor={'platform-' + name}
         className="text-xs text-neutral-dark-grey"
       >
         Platform
       </label>
       <div
         className={`w-full h-[48px] flex items-center justify-between cursor-pointer bg-white transition-all duration-300 ease-in-out rounded-lg py-3 px-3 border border-neutral-borders hover:border-primary-index hover:shadow-lg ${
-          dropdownOpen ? "!border-primary-index !shadow-xl" : ""
-        } ${error ? "border-error" : ""}`}
+          dropdownOpen ? '!border-primary-index !shadow-xl' : ''
+        } ${error ? 'border-error' : ''}`}
         onClick={toggleDropdown}
       >
         <div className="flex items-center justify-center gap-3">
@@ -97,7 +104,7 @@ const Dropdown: React.FC<DropdownProps> = ({
             {!selectedValue?.icon ? (
               <Image
                 src={`/images/icon-link.svg`}
-                alt={"Link icon"}
+                alt={'Link icon'}
                 width={16}
                 height={16}
               />
@@ -115,12 +122,12 @@ const Dropdown: React.FC<DropdownProps> = ({
         </div>
         <span
           className={`transition-all duration-300 ease-in-out ${
-            dropdownOpen ? "rotate-180" : "rotate-0"
+            dropdownOpen ? 'rotate-180' : 'rotate-0'
           }`}
         >
           <Image
             src={`/images/icon-chevron-down.svg`}
-            alt={"Dropdown icon"}
+            alt={'Dropdown icon'}
             width={14}
             height={14}
           />
@@ -135,14 +142,14 @@ const Dropdown: React.FC<DropdownProps> = ({
               onMouseEnter={() => handleMouseEnter(item.name)}
               onMouseLeave={() => handleMouseLeave(item.name)}
               onClick={() => {
-                handleSelectedValue(item);
-                toggleDropdown();
-                onClick && onClick();
+                handleSelectedValue(item)
+                toggleDropdown()
+                onClick && onClick()
               }}
               className={`flex items-center gap-3 cursor-pointer border-b-2 border-neutral-borders py-3  ${
-                index === 0 ? "pt-0" : ""
+                index === 0 ? 'pt-0' : ''
               } ${
-                index === arr.length - 1 ? "border-t-2 border-none pb-0" : ""
+                index === arr.length - 1 ? 'border-t-2 border-none pb-0' : ''
               }`}
             >
               <span className="">
@@ -150,8 +157,8 @@ const Dropdown: React.FC<DropdownProps> = ({
                   color:
                     (onMouseEnter.name === item.name && onMouseEnter.status) ||
                     selectedValue?.name === item.name
-                      ? "#633CFF"
-                      : "#737373",
+                      ? '#633CFF'
+                      : '#737373',
                   size: 16,
                 })}
               </span>
@@ -160,8 +167,8 @@ const Dropdown: React.FC<DropdownProps> = ({
                 ${
                   (onMouseEnter.name === item.name && onMouseEnter.status) ||
                   selectedValue?.name === item.name
-                    ? "text-primary-index"
-                    : "text-neutral-dark-grey"
+                    ? 'text-primary-index'
+                    : 'text-neutral-dark-grey'
                 }
             `}
               >
@@ -172,7 +179,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         </ul>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Dropdown;
+export default Dropdown
