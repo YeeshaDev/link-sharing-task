@@ -16,8 +16,8 @@ export default function DashboardHeader() {
           <Image
             src="/images/logo-devlinks-small.svg"
             alt="devlinks logo"
-            width={32}
-            height={32}
+            width={42}
+            height={42}
             priority
           />
         </Link>
@@ -53,7 +53,7 @@ export default function DashboardHeader() {
         <div className="md:hidden">
           <Link
             href={`/${user?.displayName}`}
-            className="block w-full bg-white border border-solid border-primary-index hover:bg-neutral-light-purple text-primary-index text-sm font-bold rounded-md px-4 py-3 transition-colors duration-300 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed disabled:text-neutral-grey disabled:border-neutral-borders disabled:bg-neutral-light-grey"
+            className="block w-full bg-white border border-solid border-primary-index hover:bg-neutral-light-purple text-primary-index text-sm font-semibold hover:scale-[1.03] rounded-md px-4 py-3 transition-colors duration-300 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed disabled:text-neutral-grey disabled:border-neutral-borders disabled:bg-neutral-light-grey"
           >
             <PreviewIcon />
           </Link>
@@ -62,7 +62,7 @@ export default function DashboardHeader() {
         <div className="hidden md:block">
           <Link
             href={`/${user?.displayName}`}
-            className="block w-full bg-white border border-solid border-primary-index hover:bg-neutral-light-purple text-primary-index text-sm font-bold rounded-md px-7 py-3 transition-colors duration-300 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed disabled:text-neutral-grey disabled:border-neutral-borders disabled:bg-neutral-light-grey"
+            className="block w-full bg-white border border-solid border-primary-index hover:bg-neutral-light-purple text-primary-index text-sm font-semibold hover:scale-[1.03] hover:transition-all hover:duration-400 rounded-md px-7 py-3 transition-colors duration-300 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed disabled:text-neutral-grey disabled:border-neutral-borders disabled:bg-neutral-light-grey"
           >
             Preview
           </Link>

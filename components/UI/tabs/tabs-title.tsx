@@ -1,19 +1,11 @@
 'use client'
 
-// next.js
 import { usePathname } from 'next/navigation'
-
-// react
 import { useState } from 'react'
-
-// context
 import { useTabsItemContext } from './tabs-item'
-
-//icons
 import Link from '../icons/link'
 import ProfileIcon from '../icons/profile'
 
-// Define types for props
 interface TabsTitleProps {
   children?: React.ReactNode
 }

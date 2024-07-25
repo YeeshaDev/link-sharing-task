@@ -15,7 +15,7 @@ function RegisterPage() {
   }, [])
 
   return (
-    <div className="flex flex-col gap-5 px-8 pt-14 md:py-10 md:w-[476px] md:px-10 overflow-x-hidden ">
+    <div className="flex flex-col gap-5 px-8 pt-14 md:py-10 md:w-[476px] md:px-10 overflow-x-hidden  ">
       {isFormLoaded ? (
         <>
           <HeadingGroup

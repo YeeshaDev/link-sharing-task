@@ -7,7 +7,8 @@ import { usePathname } from 'next/navigation'
 
 function PhoneMockup() {
   const { devlinksList } = useDevlinksContext()
-  const { userObject, userProfilePicMockup } = useUserProfileContext()
+  const { userObject, userProfilePicMockup, userProfilePicURL } =
+    useUserProfileContext()
 
   const pathname = usePathname()
 
@@ -19,11 +20,12 @@ function PhoneMockup() {
           alt="Phone mockup illustration"
           width={307}
           height={631}
+          priority
         />
         <div className="absolute top-16 flex flex-col items-center justify-center w-full ">
           {userProfilePicMockup || userObject?.profile_picture ? (
             <div className="h-[96px] w-[96px]">
-              {!userProfilePicMockup ? (
+              {!userProfilePicURL ? (
                 <Image
                   src={'/images/illustration-phone-mockup.svg'}
                   alt="User's profile photo"
@@ -33,11 +35,11 @@ function PhoneMockup() {
                 />
               ) : (
                 <Image
-                  src={userProfilePicMockup}
+                  src={userProfilePicURL}
                   alt="User's photo preview"
                   width={96}
                   height={96}
-                  className="!h-[96px] !w-[96px] rounded-full border-4 border-primary-index duration-200 hover:scale-[1.01] object-cover"
+                  className="!h-[96px] bg-black/20 !w-[96px] rounded-full border-4 border-primary-index duration-200 hover:scale-[1.01] object-cover"
                 />
               )}
             </div>
@@ -70,7 +72,7 @@ function PhoneMockup() {
             }`}
           >
             {devlinksList?.map((link: any) => (
-              <DevLink key={link.id} link={link} mockup />
+              <DevLink key={link?.id} link={link} mockup />
             ))}
           </ul>
         </div>

@@ -14,10 +14,10 @@ interface DisplayUserProfileProps {
 const DisplayUserProfile: React.FC<DisplayUserProfileProps> = ({ profile }) => {
   return (
     <div className="flex flex-col gap-4 items-center justify-center">
-      <div className="border-4 rounded-full border-primary-index hover:border-primary-hover transition-all duration-300 ease-in-out">
+      <div className="border-4 rounded-full border-primary-index hover:scale[1.02] transition-all duration-300 ease-in-out">
         {profile?.profile_picture ? (
           <Image
-            className="rounded-full !h-[104px] !w-[104px]"
+            className="rounded-full !h-[104px] object-cover !w-[104px]"
             src={profile.profile_picture}
             alt="profile picture"
             height={104}
@@ -40,13 +40,13 @@ const DisplayUserProfile: React.FC<DisplayUserProfileProps> = ({ profile }) => {
         )}
       </div>
       <div className="w-[90%] overflow-hidden whitespace-normal text-center">
-        <h1 className="text-4xl font-bold text-center text-neutral-dark-grey">
-          {profile.first_name} {profile.last_name}
+        <h1 className="text-[32px] font-bold text-center text-neutral-dark-grey">
+          {profile?.first_name} {profile?.last_name}
         </h1>
       </div>
       <a
         className="text-neutral-grey hover:text-neutral-dark-grey/50 hover:scale-105 transition-all cursor-pointer duration-300 ease-in-out"
-        href={`mailto:${profile.email}`}
+        href={`mailto:${profile?.email}`}
       >
         {profile.email}
       </a>
