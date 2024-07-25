@@ -52,11 +52,11 @@ export const getUserDevlinks = async (): Promise<Devlink[] | null> => {
     if (snapshot.exists()) {
       return snapshot.val() as Devlink[]
     } else {
-      return null // Return null if no devlinks are found
+      return null
     }
   } catch (error) {
     console.error('Error fetching user devlinks:', error)
-    return null // Return null on error
+    return null
   }
 }
 
@@ -76,11 +76,11 @@ export const submitUserDevLinks = async (
       devlinks: devlinksList,
     })
     if (devlinksList.length > 0) {
-      toast('Your changes saved!', {
+      toast('Your changes have been successfully saved!', {
         icon: <SavedIcon />,
       })
     } else {
-      toast('Dev links cleared!', {
+      toast('Dev links is cleared!', {
         icon: <SavedIcon />,
       })
     }
@@ -126,7 +126,7 @@ export const submitUserProfileDatas = async (
     await update(userRef, {
       profile: profileDatas,
     })
-    toast('Changes saved Successfully!', {
+    toast('Your changes have been successfully saved!', {
       icon: <SavedIcon />,
     })
   } catch (error) {

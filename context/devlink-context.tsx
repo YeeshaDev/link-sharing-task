@@ -45,7 +45,6 @@ interface DevlinksContextType {
   reorderList: (newOrderedList: any) => void
 }
 
-// Define the type for the context
 const DevlinksContext = createContext<DevlinksContextType | undefined>(
   undefined
 )

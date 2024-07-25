@@ -191,10 +191,9 @@ const UserProfileProvider: React.FC<UserProfileProviderProps> = ({
     setLoading(true)
     getUserProfileData()
       .then((userData: UserProfileData | any) => {
-        // Convert UserProfileData to UserProfile
         const convertedData: UserProfile = {
           ...userData,
-          profile_picture: userData.profile_picture || null,
+          profile_picture: userData?.profile_picture || null,
         }
         setUserObject(convertedData)
         setUserProfilePicURL(userData.profile_picture || null)

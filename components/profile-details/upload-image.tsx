@@ -90,10 +90,10 @@ export default function UploadImage() {
 
   return (
     <div
-      className={`p-6 flex flex-col md:flex-row md:items-center md:justify-between bg-neutral-light-grey rounded-xl ${error?.profile_picture?.status ? 'border !border-error' : ''}`}
+      className={`p-6 flex flex-col md:flex-row md:items-center md:justify-between bg-neutral-light-grey  rounded-xl ${error?.profile_picture?.status ? 'border !border-error' : ''}`}
     >
       <p className="text-neutral-grey md:text-nowrap">Profile picture</p>
-      <div className="md:flex md:items-center md:justify-end md:gap-5">
+      <div className="md:flex overflow-hidden md:items-center md:justify-end md:gap-5">
         <div className="flex my-4">
           <label
             htmlFor="upload-image-input"
@@ -116,8 +116,8 @@ export default function UploadImage() {
                   sizes="193px"
                   className="object-cover rounded-lg"
                 />
-                <div className="absolute top-0 left-0 w-full h-full rounded-corner bg-neutral-dark-grey opacity-50 rounded-corner overflow-hidden" />
-                <div className="h-full w-full absolute top-0 right-0 flex flex-col items-center justify-center">
+                <div className="absolute top-0 left-0 w-full h-full rounded-lg bg-neutral-dark-grey opacity-50 rounded-corner overflow-hidden" />
+                <div className="h-full w-full absolute top-0 right-0 flex flex-col rounded-lg items-center justify-center">
                   <UploadImageIcon color="#fff" />
                   <span className="text-lg font-semibold text-white">
                     Change Image
